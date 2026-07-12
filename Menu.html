@@ -1,51 +1,359 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Manu Mono Locrio</title>
-</head>
-    <style>
-  .canva-container {
-    position: relative;
-    width: 100%;
-    max-width: 800px; /* Ajusta este valor si es necesario */
-    margin: auto;
-    overflow: hidden;
-    border-radius: 8px;
-    box-shadow: 0 2px 8px rgba(63, 69, 81, 0.16);
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mono Locrio Snack Bar — Menú</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Permanent+Marker&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg-deep:#10151f;
+    --bg-panel:#1b2333;
+    --bg-panel-2:#212b3f;
+    --bg-card:#2a3448;
+    --bg-card-edge:#333f57;
+    --gold:#facd15;
+    --gold-soft:#fde68a;
+    --gold-dark:#b8930b;
+    --text-light:#eef1f6;
+    --text-muted:#93a0b8;
+    --line:#3a4560;
+    --radius:16px;
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{
+    background:
+      radial-gradient(circle at 15% 0%, rgba(250,205,21,0.07), transparent 40%),
+      radial-gradient(circle at 90% 10%, rgba(250,205,21,0.05), transparent 35%),
+      var(--bg-deep);
+    color:var(--text-light);
+    font-family:'Nunito', sans-serif;
+    min-height:100vh;
+    -webkit-font-smoothing:antialiased;
+  }
+  a{color:inherit;}
+
+  /* ---------- HEADER ---------- */
+  header.top{
+    position:sticky; top:0; z-index:30;
+    background:rgba(16,21,31,0.92);
+    backdrop-filter:blur(10px);
+    border-bottom:1px solid var(--line);
+  }
+  .top-inner{
+    max-width:1180px; margin:0 auto;
+    padding:14px 20px;
+    display:flex; align-items:center; justify-content:space-between; gap:16px;
+  }
+  .brand{display:flex; align-items:center; gap:12px;}
+  .brand svg{width:42px;height:42px;flex-shrink:0;}
+  .brand-text{display:flex; flex-direction:column; line-height:1;}
+  .brand-text .name{
+    font-family:'Permanent Marker', cursive;
+    font-size:1.35rem;
+    color:var(--gold);
+    letter-spacing:0.5px;
+  }
+  .brand-text .tag{
+    font-size:0.68rem;
+    color:var(--text-muted);
+    letter-spacing:2px;
+    text-transform:uppercase;
+    margin-top:2px;
+  }
+  /* ---------- HERO ---------- */
+  .hero{
+    max-width:1180px; margin:0 auto;
+    padding:38px 20px 18px;
+    text-align:center;
+  }
+  .hero h1{
+    font-family:'Permanent Marker', cursive;
+    font-size:clamp(1.9rem, 4vw, 2.8rem);
+    color:var(--gold);
+    margin:0 0 6px;
+    text-shadow:0 2px 0 rgba(0,0,0,0.35);
+  }
+  .hero p{
+    color:var(--text-muted);
+    margin:0;
+    font-size:0.98rem;
   }
 
-  .canva-container::before {
-    content: "";
-    display: block;
-    padding-top: 141.4286%; /* Mantiene la relación de aspecto */
+  /* ---------- FILTERS ---------- */
+  .filters-wrap{
+    position:sticky; top:70px; z-index:20;
+    background:linear-gradient(var(--bg-deep) 60%, transparent);
+    padding:14px 0 6px;
+  }
+  .filters{
+    max-width:1180px; margin:0 auto;
+    padding:0 20px;
+    display:flex; gap:8px;
+    overflow-x:auto;
+    scrollbar-width:none;
+  }
+  .filters::-webkit-scrollbar{display:none;}
+  .filter-btn{
+    flex:0 0 auto;
+    background:var(--bg-panel);
+    border:1px solid var(--line);
+    color:var(--text-light);
+    padding:8px 16px;
+    border-radius:999px;
+    font-weight:700;
+    font-size:0.82rem;
+    cursor:pointer;
+    display:flex; align-items:center; gap:6px;
+    transition:all .15s ease;
+    white-space:nowrap;
+  }
+  .filter-btn:hover{border-color:var(--gold-dark);}
+  .filter-btn.active{
+    background:var(--gold);
+    color:var(--bg-deep);
+    border-color:var(--gold);
   }
 
-  .canva-iframe {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    border: none;
+  /* ---------- SECTIONS ---------- */
+  main{max-width:1180px; margin:0 auto; padding:10px 20px 60px;}
+  .section{margin-top:30px;}
+  .section-head{
+    display:flex; align-items:center; gap:12px;
+    margin-bottom:18px;
+  }
+  .section-head h2{
+    font-family:'Permanent Marker', cursive;
+    font-size:1.35rem;
+    color:var(--gold-soft);
+    margin:0;
+    font-weight:400;
+  }
+  .section-head .rule{
+    flex:1;
+    height:0;
+    border-top:2px dashed var(--line);
   }
 
-  @media (max-width: 600px) {
-    .canva-container {
-      max-width: 100%;
-    }
+  .menu-list{
+    display:grid;
+    grid-template-columns:repeat(auto-fit, minmax(280px, 1fr));
+    gap:0 32px;
+  }
+
+  /* ---------- ITEM DE LISTA ---------- */
+  .menu-item{
+    display:flex;
+    align-items:baseline;
+    gap:8px;
+    padding:9px 2px;
+    border-bottom:1px dashed var(--line);
+  }
+  .menu-item .name{
+    font-weight:700;
+    font-size:0.92rem;
+    color:var(--text-light);
+    white-space:nowrap;
+    overflow:hidden;
+    text-overflow:ellipsis;
+  }
+  .menu-item .leader{
+    flex:1;
+    border-bottom:2px dotted var(--bg-card-edge);
+    height:0;
+    margin-bottom:5px;
+    min-width:12px;
+  }
+  .menu-item .price{
+    font-weight:800;
+    font-size:0.92rem;
+    color:var(--gold);
+    white-space:nowrap;
+    flex-shrink:0;
+  }
+
+  footer{
+    text-align:center;
+    padding:30px 20px 40px;
+    color:var(--text-muted);
+    font-size:0.8rem;
+    border-top:1px solid var(--line);
+  }
+  footer strong{color:var(--gold);}
+
+  @media (max-width:480px){
+    .brand-text .name{font-size:1.1rem;}
+    .hero h1{font-size:1.6rem;}
   }
 </style>
+</head>
 <body>
 
-    <div class="canva-container">
-    <iframe 
-    loading="lazy"
-    src="https://www.canva.com/design/DAGjyb_SuaQ/QNIddzLqzS2u-TmybcmJdw/view?embed"
-    allowfullscreen
-    class="canva-iframe">
-  </iframe>
+<header class="top">
+  <div class="top-inner">
+    <div class="brand">
+      <svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M20 8c6 2 10 8 9 16-1 10-9 16-16 14C6 36 4 27 8 19 11 13 15 9 20 8Z" fill="var(--gold)"/>
+        <path d="M20 8c3 3 3 7 0 9" stroke="#10151f" stroke-width="2" stroke-linecap="round"/>
+        <circle cx="16" cy="24" r="1.6" fill="#10151f"/>
+      </svg>
+      <div class="brand-text">
+        <span class="name">Mono Locrio</span>
+        <span class="tag">Snack Bar</span>
+      </div>
+    </div>
+  </div>
+</header>
+
+<div class="hero">
+  <h1>Nuestro Menú</h1>
+  <p>Panajachel, Sololá, Guatemala · Precios en Quetzales (Q)</p>
 </div>
+
+<div class="filters-wrap">
+  <div class="filters" id="filters"></div>
+</div>
+
+<main id="sections"></main>
+
+<footer>
+  © 2026 <strong>Mono Locrio Snack Bar</strong> — Panajachel, Sololá, Guatemala
+</footer>
+
+<script>
+// ---------------------------------------------------------------
+// DATOS: cargados desde Productos_para_menu.xlsx (Categoria, Producto, Precio)
+// Reemplazar 'desc' e 'img' por contenido real antes de publicar.
+// ---------------------------------------------------------------
+const CATEGORY_META = {
+  "Coctel":      { label: "Cócteles" },
+  "Cerveza":     { label: "Cervezas" },
+  "Michelada":   { label: "Micheladas" },
+  "Combo":       { label: "Combos" },
+  "Oferta":      { label: "Ofertas" },
+  "Directo":     { label: "Directos" },
+  "Tequila":     { label: "Tequila" },
+  "Sin Alcohol": { label: "Sin Alcohol" },
+  "Comida":      { label: "Comida" },
+};
+const CATEGORY_ORDER = ["Coctel","Cerveza","Michelada","Combo","Oferta","Directo","Tequila","Sin Alcohol","Comida"];
+
+const PRODUCTS = [
+  {cat:"Cerveza", name:"Monte Carlo", price:35},
+  {cat:"Cerveza", name:"Cabro", price:25},
+  {cat:"Cerveza", name:"Gallo", price:25},
+  {cat:"Coctel", name:"Cuba Libre con Botran 12 años", price:40},
+  {cat:"Coctel", name:"Jager Bom", price:40},
+  {cat:"Coctel", name:"Mono Locrio", price:35},
+  {cat:"Coctel", name:"Toxica", price:35},
+  {cat:"Coctel", name:"Sky Blue Mary", price:35},
+  {cat:"Coctel", name:"Mona Regañona", price:35},
+  {cat:"Coctel", name:"Cute Mango", price:35},
+  {cat:"Coctel", name:"Banana Gin Pink", price:35},
+  {cat:"Coctel", name:"Polvo de Bruja", price:35},
+  {cat:"Coctel", name:"Mojito Sex", price:35},
+  {cat:"Coctel", name:"Orgasmo", price:40},
+  {cat:"Coctel", name:"Overol", price:45},
+  {cat:"Coctel", name:"Octavos Preparados", price:35},
+  {cat:"Coctel", name:"Ron Botran 12 Años a las Rocas", price:40},
+  {cat:"Coctel", name:"Cuba Libre con Flor de Caña 7 Años", price:35},
+  {cat:"Coctel", name:"Quetzalteca Preparada", price:35},
+  {cat:"Coctel", name:"Purple Gin", price:30},
+  {cat:"Coctel", name:"XL Preparado", price:30},
+  {cat:"Coctel", name:"Flor de Caña 7 Años a las Rocas", price:30},
+  {cat:"Coctel", name:"Bloody Mary", price:30},
+  {cat:"Coctel", name:"Vodka Naranja o Arándano", price:25},
+  {cat:"Coctel", name:"Cuba Libre con Bacardi", price:25},
+  {cat:"Combo", name:"Cubetazo de 6 Cervezas Gallo o Cabro", price:130},
+  {cat:"Combo", name:"XL Botella + 3 Gaseosas", price:160},
+  {cat:"Combo", name:"Pulmón de Quetzalteca + 3 Gaseosas", price:170},
+  {cat:"Combo", name:"Cubetazo de 6 Cervezas Monte Carlo", price:175},
+  {cat:"Comida", name:"Mollejitas", price:40},
+  {cat:"Comida", name:"Nachos", price:40},
+  {cat:"Comida", name:"Papas", price:60},
+  {cat:"Comida", name:"Papas con Alitas", price:90},
+  {cat:"Directo", name:"Smirnoff", price:20},
+  {cat:"Directo", name:"VIP", price:20},
+  {cat:"Michelada", name:"Michelada Monte Carlo", price:50},
+  {cat:"Michelada", name:"Michelada Gallo o Cabro", price:40},
+  {cat:"Oferta", name:"2 Cubas Libres con Bacardi", price:40},
+  {cat:"Oferta", name:"2 VIP", price:45},
+  {cat:"Oferta", name:"Promo 2 Mojito Sex", price:60},
+  {cat:"Sin Alcohol", name:"Mineral", price:10},
+  {cat:"Sin Alcohol", name:"Coca Cola", price:10},
+  {cat:"Sin Alcohol", name:"7 UP", price:10},
+  {cat:"Sin Alcohol", name:"Agua Tónica", price:15},
+  {cat:"Sin Alcohol", name:"Cimarrona", price:25},
+  {cat:"Sin Alcohol", name:"Levanta Muertos", price:35},
+  {cat:"Tequila", name:"Shot de Tequila Rancho Escondido 2oz", price:15},
+];
+
+function renderFilters(){
+  const wrap = document.getElementById('filters');
+  const allBtn = document.createElement('button');
+  allBtn.className = 'filter-btn active';
+  allBtn.dataset.cat = 'all';
+  allBtn.innerHTML = 'Todo';
+  wrap.appendChild(allBtn);
+
+  CATEGORY_ORDER.forEach(cat=>{
+    const meta = CATEGORY_META[cat];
+    const btn = document.createElement('button');
+    btn.className = 'filter-btn';
+    btn.dataset.cat = cat;
+    btn.innerHTML = `${meta.label}`;
+    wrap.appendChild(btn);
+  });
+
+  wrap.addEventListener('click', (e)=>{
+    const btn = e.target.closest('.filter-btn');
+    if(!btn) return;
+    wrap.querySelectorAll('.filter-btn').forEach(b=>b.classList.remove('active'));
+    btn.classList.add('active');
+    const cat = btn.dataset.cat;
+    document.querySelectorAll('.section').forEach(sec=>{
+      sec.style.display = (cat==='all' || sec.dataset.cat===cat) ? '' : 'none';
+    });
+  });
+}
+
+function itemHTML(p){
+  return `
+    <div class="menu-item">
+      <span class="name">${p.name}</span>
+      <span class="leader"></span>
+      <span class="price">Q${p.price}</span>
+    </div>
+  `;
+}
+
+function renderSections(){
+  const main = document.getElementById('sections');
+  CATEGORY_ORDER.forEach(cat=>{
+    const items = PRODUCTS.filter(p=>p.cat===cat);
+    if(!items.length) return;
+    const meta = CATEGORY_META[cat];
+    const section = document.createElement('section');
+    section.className = 'section';
+    section.dataset.cat = cat;
+    section.innerHTML = `
+      <div class="section-head">
+        <h2>${meta.label}</h2>
+        <div class="rule"></div>
+      </div>
+      <div class="menu-list">
+        ${items.map(itemHTML).join('')}
+      </div>
+    `;
+    main.appendChild(section);
+  });
+}
+
+renderFilters();
+renderSections();
+</script>
+
 </body>
 </html>
